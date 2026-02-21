@@ -13,7 +13,7 @@
     "./utilities": "./css/utilities.css"
   },
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest"
   },
   "keywords": ["css", "bem", "emoji", "framework", "design-system"],

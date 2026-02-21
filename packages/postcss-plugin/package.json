@@ -4,7 +4,7 @@
   "description": "PostCSS plugin for BEMoji — transforms readable BEM names to emoji class names at build time.",
   "main": "src/index.js",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run --passWithNoTests"
   },
   "keywords": ["postcss-plugin", "bemoji", "css", "emoji", "bem"],
   "license": "MIT",

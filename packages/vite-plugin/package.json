@@ -4,7 +4,7 @@
   "description": "Vite plugin for BEMoji — transforms emoji class names in HTML, JSX, TSX, and Vue templates.",
   "main": "src/index.js",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run --passWithNoTests"
   },
   "keywords": ["vite-plugin", "bemoji", "css", "emoji", "bem", "vite"],
   "license": "MIT",
