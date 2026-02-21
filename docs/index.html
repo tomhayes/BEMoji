@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEMoji — The Emoji-First CSS Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,700;9..144,900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0f;
+    --paper: #f5f2eb;
+    --paper-2: #edeae0;
+    --accent: #ff4d00;
+    --accent-2: #7c3aed;
+    --muted: #6b6860;
+    --border: #d4d0c4;
+    --code-bg: #1a1a1f;
+    --code-fg: #e8e4d8;
+    --green: #16a34a;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 52px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo {
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2rem; opacity: 0.7; }
+  .nav-links a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--paper); }
+
+  .nav-badge {
+    background: var(--accent);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 52px;
+    min-height: calc(100vh - 52px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .hero-left {
+    padding: 5rem 4rem 5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 2px solid var(--ink);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-title .accent { color: var(--accent); }
+  .hero-title .emoji-text { font-size: 0.85em; }
+
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 1.25rem;
+    margin-bottom: 2.5rem;
+    max-width: 42ch;
+    line-height: 1.5;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid var(--ink);
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-value {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.3rem;
+  }
+
+  /* ── HERO RIGHT (Live Demo) ── */
+  .hero-right {
+    background: var(--code-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .demo-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 1.5rem;
+  }
+
+  .demo-tab {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid transparent;
+  }
+  .demo-tab.active { color: var(--code-fg); border-bottom-color: var(--accent); }
+  .demo-tab:hover:not(.active) { color: rgba(255,255,255,0.7); }
+
+  .demo-pane {
+    display: none;
+    flex: 1;
+    overflow: auto;
+    padding: 2rem;
+  }
+  .demo-pane.active { display: block; }
+
+  pre {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--code-fg);
+    white-space: pre;
+    tab-size: 2;
+  }
+
+  .tok-tag { color: #f97583; }
+  .tok-attr { color: #79b8ff; }
+  .tok-val { color: #9ecbff; }
+  .tok-sel { color: #b392f0; }
+  .tok-prop { color: #79b8ff; }
+  .tok-unit { color: #ffab70; }
+  .tok-cmt { color: rgba(255,255,255,0.3); font-style: italic; }
+  .tok-key { color: #f97583; }
+  .tok-str { color: #9ecbff; }
+  .tok-fn { color: #b392f0; }
+
+  /* ── SECTION BASICS ── */
+  section { border-bottom: 2px solid var(--ink); }
+
+  .section-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 4rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-lead {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 60ch;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── CONCEPTS GRID ── */
+  .concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 2px solid var(--ink);
+    margin-top: 3rem;
+  }
+
+  .concept-card {
+    padding: 2.5rem;
+    border-right: 2px solid var(--ink);
+  }
+  .concept-card:last-child { border-right: none; }
+
+  .concept-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .concept-name {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .concept-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .concept-example {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.6rem 0.9rem;
+    display: inline-block;
+  }
+
+  /* ── ANATOMY SECTION ── */
+  .anatomy-section {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .anatomy-section .section-title { color: var(--paper); }
+  .anatomy-section .section-lead { color: rgba(255,255,255,0.55); }
+
+  .anatomy-diagram {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: var(--mono);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .anatomy-part {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .anatomy-emoji {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1;
+  }
+
+  .anatomy-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.45;
+  }
+
+  .anatomy-sep {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    opacity: 0.35;
+    padding: 0 0.25rem;
+    align-self: center;
+    font-family: var(--mono);
+  }
+
+  .anatomy-meaning {
+    display: inline-block;
+    font-size: 0.7rem;
+    opacity: 0.4;
+    text-align: center;
+  }
+
+  .anatomy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+
+  .anatomy-table th {
+    text-align: left;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.45;
+  }
+
+  .anatomy-table td {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    vertical-align: middle;
+  }
+
+  .anatomy-table tr:last-child td { border-bottom: none; }
+
+  .anatomy-table td:first-child { font-size: 1.3rem; }
+  .anatomy-table td:nth-child(2) { color: rgba(255,255,255,0.6); }
+  .anatomy-table td:nth-child(3) { color: #b392f0; }
+
+  /* ── VOCABULARY ── */
+  .vocab-section {
+    background: var(--paper-2);
+  }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .vocab-category {
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+
+  .vocab-category-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.6rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .vocab-items {
+    padding: 0.5rem 0;
+  }
+
+  .vocab-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+
+  .vocab-item:last-child { border-bottom: none; }
+  .vocab-item-emoji { font-size: 1.2rem; min-width: 28px; }
+  .vocab-item-name { font-weight: 500; }
+  .vocab-item-aliases { color: var(--muted); font-size: 0.75rem; margin-left: auto; font-family: var(--mono); }
+
+  /* ── UTILITIES ── */
+  .utilities-section { }
+
+  .util-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .util-group-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .util-table {
+    width: 100%;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    border-collapse: collapse;
+  }
+
+  .util-table tr { border-bottom: 1px solid var(--border); }
+  .util-table tr:last-child { border-bottom: none; }
+  .util-table td { padding: 0.55rem 0; vertical-align: middle; }
+  .util-table td:first-child { font-size: 1.2rem; min-width: 40px; }
+  .util-table td:nth-child(2) { color: var(--accent-2); font-weight: 500; }
+  .util-table td:nth-child(3) { color: var(--muted); padding-left: 1rem; }
+
+  /* ── RESPONSIVE ── */
+  .breakpoints-section {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .breakpoints-section .section-title { color: var(--paper); }
+  .breakpoints-section .section-lead { color: rgba(255,255,255,0.5); }
+
+  .breakpoint-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.12);
+    margin-top: 2.5rem;
+  }
+
+  .bp-card {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+  .bp-card:last-child { border-right: none; }
+
+  .bp-emoji { font-size: 2rem; margin-bottom: 0.75rem; }
+  .bp-name { font-family: var(--mono); font-size: 0.75rem; opacity: 0.5; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .bp-range { font-family: var(--mono); font-size: 0.85rem; color: #79b8ff; margin-bottom: 0.5rem; }
+  .bp-usage {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    background: rgba(255,255,255,0.06);
+    padding: 0.4rem 0.6rem;
+    margin-top: 0.75rem;
+    color: #b392f0;
+  }
+
+  /* ── TOOLING ── */
+  .tooling-section {
+    background: var(--paper-2);
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .tool-card {
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+
+  .tool-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 2px solid var(--ink);
+    background: white;
+  }
+
+  .tool-icon { font-size: 1.5rem; }
+  .tool-name { font-family: var(--serif); font-weight: 700; font-size: 1.05rem; }
+  .tool-pkg { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-left: auto; }
+
+  .tool-body { padding: 1.5rem; }
+  .tool-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+  .tool-code {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 1rem 1.25rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  /* ── CONFIG ── */
+  .config-section { }
+
+  .config-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 2.5rem;
+  }
+
+  /* ── COMPONENT SHOWCASE ── */
+  .showcase-section {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .showcase-section .section-title { color: var(--paper); }
+  .showcase-section .section-lead { color: rgba(255,255,255,0.5); }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-top: 2.5rem;
+  }
+
+  .showcase-item {
+    border-right: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+
+  .showcase-item:nth-child(even) { border-right: none; }
+
+  .showcase-preview {
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .showcase-meta {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Actual component previews */
+  .preview-card {
+    background: white;
+    color: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 200px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .preview-card-img {
+    height: 90px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+  }
+  .preview-card-body { padding: 0.75rem; }
+  .preview-card-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem; }
+  .preview-card-text { font-size: 0.72rem; color: #666; }
+
+  .preview-badge { display: inline-block; background: #7c3aed; color: white; padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+  .preview-badge-red { background: #dc2626; }
+  .preview-badge-green { background: #16a34a; }
+  .preview-badge-yellow { background: #d97706; color: #111; }
+  .preview-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+
+  .preview-btn { padding: 0.6rem 1.2rem; border-radius: 6px; border: none; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+  .preview-btn-primary { background: #2563eb; color: white; }
+  .preview-btn-danger { background: #dc2626; color: white; }
+  .preview-btn-ghost { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.4); }
+  .preview-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+  .preview-alert { background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.4); border-radius: 6px; padding: 0.75rem 1rem; color: white; font-size: 0.82rem; max-width: 220px; display: flex; gap: 0.5rem; align-items: flex-start; }
+
+  .preview-input {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    color: white;
+    font-size: 0.85rem;
+    width: 200px;
+    outline: none;
+  }
+  .preview-input:focus { border-color: #7c3aed; }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy-section { }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 2px solid var(--ink);
+    margin-top: 3rem;
+  }
+
+  .pillar {
+    padding: 2.5rem 2rem;
+    border-right: 2px solid var(--ink);
+  }
+  .pillar:last-child { border-right: none; }
+
+  .pillar-num {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-body { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+  /* ── INSTALL ── */
+  .install-section {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .install-section .section-title { color: var(--paper); }
+
+  .install-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .install-step { }
+
+  .step-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .install-code {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1rem 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--code-fg);
+    line-height: 1.7;
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+
+  .step-desc { color: rgba(255,255,255,0.5); font-size: 0.88rem; margin-top: 0.75rem; }
+
+  /* ── COMPARISON ── */
+  .comparison-section {
+    background: var(--paper-2);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+    border: 2px solid var(--ink);
+  }
+
+  .comparison-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+
+  .comparison-table th:first-child { width: 30%; }
+
+  .comparison-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    vertical-align: middle;
+  }
+
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { font-weight: 500; }
+
+  .check { color: var(--green); font-size: 1rem; }
+  .cross { color: #dc2626; font-size: 1rem; }
+  .partial { color: #d97706; font-size: 0.8rem; font-style: italic; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    opacity: 0.5;
+  }
+
+  .footer-links a { color: inherit; text-decoration: none; }
+  .footer-links a:hover { opacity: 1; color: white; }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    opacity: 0.35;
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── VERSION TAG ── */
+  .version-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.4);
+    color: #a78bfa;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 0.75rem;
+    vertical-align: middle;
+  }
+
+  /* ── INLINE CODE ── */
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: rgba(0,0,0,0.08);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .anatomy-section code { background: rgba(255,255,255,0.1); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--code-bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.5s ease both; }
+  .hero-title { animation: fadeUp 0.5s ease 0.1s both; }
+  .hero-subtitle { animation: fadeUp 0.5s ease 0.2s both; }
+  .hero-actions { animation: fadeUp 0.5s ease 0.3s both; }
+  .hero-stats { animation: fadeUp 0.5s ease 0.4s both; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.5rem;
+    background: rgba(255,77,0,0.06);
+    margin: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  .callout strong { color: var(--accent); }
+
+  /* Dark callout */
+  .anatomy-section .callout {
+    background: rgba(255,77,0,0.1);
+    color: rgba(255,255,255,0.8);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🎯 <span>BEMoji</span> <span class="version-tag">v1.0.0-beta</span></div>
+  <div class="nav-links">
+    <a href="#concepts">Concepts</a>
+    <a href="#vocabulary">Vocabulary</a>
+    <a href="#utilities">Utilities</a>
+    <a href="#responsive">Responsive</a>
+    <a href="#tooling">Tooling</a>
+    <a href="#install">Install</a>
+  </div>
+  <div class="nav-badge">RFC DRAFT</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Block · Element · Modifier · 🎉</p>
+    <h1 class="hero-title">
+      The CSS framework<br>
+      your team will <span class="accent">actually</span><br>
+      <span class="emoji-text">argue about.</span>
+    </h1>
+    <p class="hero-subtitle">
+      BEMoji is a production-grade utility and component framework built entirely on emoji class names. Semantic, systematic, and completely illegible to anyone without the docs.
+    </p>
+    <div class="hero-actions">
+      <a href="#install" class="btn btn-primary">→ Get started</a>
+      <a href="#concepts" class="btn btn-secondary">Read the spec</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-value">0<span style="font-size:1rem;opacity:0.4">kb</span></div>
+        <div class="stat-label">Runtime JS</div>
+      </div>
+      <div>
+        <div class="stat-value">143</div>
+        <div class="stat-label">Core emoji tokens</div>
+      </div>
+      <div>
+        <div class="stat-value">∞</div>
+        <div class="stat-label">Baffled colleagues</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="demo-tabs">
+      <button class="demo-tab active" onclick="switchTab('html')">HTML</button>
+      <button class="demo-tab" onclick="switchTab('css')">CSS</button>
+      <button class="demo-tab" onclick="switchTab('config')">Config</button>
+      <button class="demo-tab" onclick="switchTab('react')">React/JSX</button>
+    </div>
+
+    <div id="tab-html" class="demo-pane active">
+<pre><span class="tok-cmt">&lt;!-- A card component in BEMoji --&gt;</span>
+
+<span class="tok-tag">&lt;article</span> <span class="tok-attr">class</span>=<span class="tok-val">"🃏"</span><span class="tok-tag">&gt;</span>
+
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-val">"🃏__🖼️ 🃏__🖼️--🌟"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-val">"hero.jpg"</span> <span class="tok-attr">alt</span>=<span class="tok-val">"..."</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-val">"🃏__📝"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;h2</span> <span class="tok-attr">class</span>=<span class="tok-val">"🃏__🔠"</span><span class="tok-tag">&gt;</span>Card Title<span class="tok-tag">&lt;/h2&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-val">"🃏__💬"</span><span class="tok-tag">&gt;</span>Card description text<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+
+  <span class="tok-tag">&lt;footer</span> <span class="tok-attr">class</span>=<span class="tok-val">"🃏__🦶"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-val">"🔘 🔘--🌟"</span><span class="tok-tag">&gt;</span>Primary<span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-val">"🔘 🔘--👻"</span><span class="tok-tag">&gt;</span>Disabled<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/footer&gt;</span>
+
+<span class="tok-tag">&lt;/article&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Responsive: 📱 = mobile-only --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-val">"📐💠 💻📐🔲"</span><span class="tok-tag">&gt;</span>
+  Grid col-1 on mobile, col-2 on desktop
+<span class="tok-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <div id="tab-css" class="demo-pane">
+<pre><span class="tok-cmt">/* ── Card Block ── */</span>
+<span class="tok-sel">.🃏</span> {
+  <span class="tok-prop">border-radius</span>: <span class="tok-unit">8px</span>;
+  <span class="tok-prop">overflow</span>: hidden;
+  <span class="tok-prop">box-shadow</span>: <span class="tok-unit">var(--🌑-md)</span>;
+  <span class="tok-prop">background</span>: <span class="tok-unit">var(--⬜)</span>;
+}
+
+<span class="tok-cmt">/* Element: image */</span>
+<span class="tok-sel">.🃏__🖼️</span> {
+  <span class="tok-prop">width</span>: <span class="tok-unit">100%</span>;
+  <span class="tok-prop">aspect-ratio</span>: <span class="tok-unit">16 / 9</span>;
+  <span class="tok-prop">overflow</span>: hidden;
+}
+
+<span class="tok-cmt">/* Modifier: featured */</span>
+<span class="tok-sel">.🃏__🖼️--🌟</span> {
+  <span class="tok-prop">outline</span>: <span class="tok-unit">3px</span> solid <span class="tok-unit">var(--⭐-gold)</span>;
+  <span class="tok-prop">outline-offset</span>: <span class="tok-unit">-3px</span>;
+}
+
+<span class="tok-cmt">/* Design tokens use emoji too */</span>
+:root {
+  <span class="tok-prop">--⬜</span>: <span class="tok-unit">#ffffff</span>;
+  <span class="tok-prop">--⬛</span>: <span class="tok-unit">#0d0d0f</span>;
+  <span class="tok-prop">--🌑-sm</span>: <span class="tok-unit">0 1px 3px rgba(0,0,0,.12)</span>;
+  <span class="tok-prop">--🌑-md</span>: <span class="tok-unit">0 4px 12px rgba(0,0,0,.15)</span>;
+  <span class="tok-prop">--📏-1</span>: <span class="tok-unit">0.25rem</span>;
+  <span class="tok-prop">--📏-4</span>: <span class="tok-unit">1rem</span>;
+  <span class="tok-prop">--📏-8</span>: <span class="tok-unit">2rem</span>;
+}</pre>
+    </div>
+
+    <div id="tab-config" class="demo-pane">
+<pre><span class="tok-cmt">// bemoji.config.js</span>
+<span class="tok-key">export default</span> {
+  <span class="tok-str">version</span>: <span class="tok-val">'1.0'</span>,
+
+  <span class="tok-cmt">/** Map readable names → emoji tokens */</span>
+  <span class="tok-str">blocks</span>: {
+    <span class="tok-str">card</span>:    <span class="tok-val">'🃏'</span>,
+    <span class="tok-str">navbar</span>:  <span class="tok-val">'🧭'</span>,
+    <span class="tok-str">modal</span>:   <span class="tok-val">'🪟'</span>,
+    <span class="tok-str">alert</span>:   <span class="tok-val">'🔔'</span>,
+    <span class="tok-str">form</span>:    <span class="tok-val">'📋'</span>,
+    <span class="tok-str">table</span>:   <span class="tok-val">'📊'</span>,
+  },
+
+  <span class="tok-str">elements</span>: {
+    <span class="tok-str">image</span>:   <span class="tok-val">'🖼️'</span>,
+    <span class="tok-str">title</span>:   <span class="tok-val">'🔠'</span>,
+    <span class="tok-str">body</span>:    <span class="tok-val">'📝'</span>,
+    <span class="tok-str">footer</span>:  <span class="tok-val">'🦶'</span>,
+    <span class="tok-str">button</span>:  <span class="tok-val">'🔘'</span>,
+    <span class="tok-str">input</span>:   <span class="tok-val">'📥'</span>,
+  },
+
+  <span class="tok-str">modifiers</span>: {
+    <span class="tok-str">primary</span>: <span class="tok-val">'🌟'</span>,
+    <span class="tok-str">danger</span>:  <span class="tok-val">'🔴'</span>,
+    <span class="tok-str">success</span>: <span class="tok-val">'🟢'</span>,
+    <span class="tok-str">ghost</span>:   <span class="tok-val">'👻'</span>,
+    <span class="tok-str">loading</span>: <span class="tok-val">'⏳'</span>,
+  },
+
+  <span class="tok-str">separator</span>: {
+    <span class="tok-str">element</span>:  <span class="tok-val">'__'</span>,
+    <span class="tok-str">modifier</span>: <span class="tok-val">'--'</span>,
+  }
+};</pre>
+    </div>
+
+    <div id="tab-react" class="demo-pane">
+<pre><span class="tok-cmt">// With the Babel transform, write readable</span>
+<span class="tok-cmt">// BEM names — they compile to emoji at build time.</span>
+
+<span class="tok-key">import</span> { bem } <span class="tok-key">from</span> <span class="tok-str">'bemoji/react'</span>;
+
+<span class="tok-key">const</span> <span class="tok-fn">Card</span> = ({ featured, children }) => (
+  <span class="tok-tag">&lt;article</span> <span class="tok-attr">className</span>=<span class="tok-val">{bem('card')}</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">className</span>=<span class="tok-val">{bem('card__image', {</span>
+      <span class="tok-str">featured</span>
+    <span class="tok-val">})}</span><span class="tok-tag">&gt;</span>
+      {children.image}
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">className</span>=<span class="tok-val">{bem('card__body')}</span><span class="tok-tag">&gt;</span>
+      {children.body}
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/article&gt;</span>
+);
+
+<span class="tok-cmt">// Compiles to:</span>
+<span class="tok-cmt">// className="🃏"</span>
+<span class="tok-cmt">// className="🃏__🖼️ 🃏__🖼️--🌟"  (when featured)</span>
+<span class="tok-cmt">// className="🃏__📝"</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts">
+  <div class="section-inner">
+    <p class="section-label">01 — Core Concepts</p>
+    <h2 class="section-title">BEM, but make it<br>completely unreadable</h2>
+    <p class="section-lead">BEMoji inherits BEM's three-layer architecture exactly. The only change is that every identifier — blocks, elements, modifiers, utilities, breakpoints, and design tokens — is an emoji.</p>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <span class="concept-emoji">🧱</span>
+        <div class="concept-name">Block</div>
+        <p class="concept-desc">A standalone, self-contained component. The root of a component tree. Blocks should be reusable and carry no inherited context.</p>
+        <code class="concept-example">.🃏  .🧭  .📋  .🪟</code>
+      </div>
+      <div class="concept-card">
+        <span class="concept-emoji">🔩</span>
+        <div class="concept-name">Element</div>
+        <p class="concept-desc">A part of a block that has no standalone meaning. Always expressed as <code>block__element</code>. Elements cannot exist outside their block.</p>
+        <code class="concept-example">.🃏__🖼️  .🧭__🔗  .📋__📥</code>
+      </div>
+      <div class="concept-card" style="border-right:none">
+        <span class="concept-emoji">🎨</span>
+        <div class="concept-name">Modifier</div>
+        <p class="concept-desc">A flag that changes appearance or behavior. Applied alongside the base class using <code>block--modifier</code> or <code>block__element--modifier</code>.</p>
+        <code class="concept-example">.🃏--🌟  .🔘--🔴  .📥--👻</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANATOMY -->
+<section class="anatomy-section" id="anatomy">
+  <div class="section-inner">
+    <p class="section-label" style="color:rgba(255,77,0,0.8)">02 — Naming Anatomy</p>
+    <h2 class="section-title">Dissecting a class name</h2>
+    <p class="section-lead">Every BEMoji class name follows a strict, parseable structure. The double-underscore and double-hyphen delimiters are preserved from BEM, making the format machine-readable even if it isn't human-readable.</p>
+
+    <div class="anatomy-diagram">
+      <div class="anatomy-part">
+        <div class="anatomy-emoji">🃏</div>
+        <div class="anatomy-label">Block</div>
+      </div>
+      <div class="anatomy-sep">__</div>
+      <div class="anatomy-part">
+        <div class="anatomy-emoji">🖼️</div>
+        <div class="anatomy-label">Element</div>
+      </div>
+      <div class="anatomy-sep">--</div>
+      <div class="anatomy-part">
+        <div class="anatomy-emoji">🌟</div>
+        <div class="anatomy-label">Modifier</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Note on escaping:</strong> Modern browsers parse emoji in CSS class selectors without escaping. For maximum compatibility (older Webkit, certain CSS-in-JS parsers), the BEMoji compiler can output escaped unicode: <code>.🃏</code> → <code>.\01F0CF</code>. The toolchain handles this automatically.
+    </div>
+
+    <table class="anatomy-table">
+      <thead>
+        <tr>
+          <th>Emoji</th>
+          <th>Role</th>
+          <th>Full class</th>
+          <th>Equivalent BEM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🃏</td>
+          <td>Block: card</td>
+          <td>.🃏</td>
+          <td>.card</td>
+        </tr>
+        <tr>
+          <td>🖼️</td>
+          <td>Element: image</td>
+          <td>.🃏__🖼️</td>
+          <td>.card__image</td>
+        </tr>
+        <tr>
+          <td>🌟</td>
+          <td>Modifier: featured</td>
+          <td>.🃏__🖼️--🌟</td>
+          <td>.card__image--featured</td>
+        </tr>
+        <tr>
+          <td>🔴</td>
+          <td>Modifier: danger</td>
+          <td>.🔘--🔴</td>
+          <td>.button--danger</td>
+        </tr>
+        <tr>
+          <td>👻</td>
+          <td>Modifier: disabled</td>
+          <td>.📥--👻</td>
+          <td>.input--disabled</td>
+        </tr>
+        <tr>
+          <td>💻🔲</td>
+          <td>Responsive utility</td>
+          <td>.💻📐🔲</td>
+          <td>.lg\:grid-cols-2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- VOCABULARY -->
+<section class="vocab-section" id="vocabulary">
+  <div class="section-inner">
+    <p class="section-label">03 — Emoji Vocabulary</p>
+    <h2 class="section-title">The canonical emoji lexicon</h2>
+    <p class="section-lead">The BEMoji spec defines 143 reserved emoji tokens across blocks, elements, modifiers, states, and design tokens. Teams can extend this with custom emoji via the config, provided they don't collide with reserved tokens.</p>
+
+    <div class="vocab-grid">
+
+      <div class="vocab-category">
+        <div class="vocab-category-header">🧱 Blocks — Components</div>
+        <div class="vocab-items">
+          <div class="vocab-item"><span class="vocab-item-emoji">🃏</span><span class="vocab-item-name">card</span><span class="vocab-item-aliases">panel, tile</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🧭</span><span class="vocab-item-name">navbar</span><span class="vocab-item-aliases">nav, header</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🦶</span><span class="vocab-item-name">footer</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">📋</span><span class="vocab-item-name">form</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🪟</span><span class="vocab-item-name">modal</span><span class="vocab-item-aliases">dialog, overlay</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔔</span><span class="vocab-item-name">alert</span><span class="vocab-item-aliases">notification</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🏷️</span><span class="vocab-item-name">badge</span><span class="vocab-item-aliases">tag, chip</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">💬</span><span class="vocab-item-name">tooltip</span><span class="vocab-item-aliases">popover</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">📊</span><span class="vocab-item-name">table</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">📑</span><span class="vocab-item-name">tabs</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🎠</span><span class="vocab-item-name">carousel</span><span class="vocab-item-aliases">slider</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🍞</span><span class="vocab-item-name">breadcrumb</span><span class="vocab-item-aliases">-</span></div>
+        </div>
+      </div>
+
+      <div class="vocab-category">
+        <div class="vocab-category-header">🔩 Elements — Parts</div>
+        <div class="vocab-items">
+          <div class="vocab-item"><span class="vocab-item-emoji">🖼️</span><span class="vocab-item-name">image</span><span class="vocab-item-aliases">img, media</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔠</span><span class="vocab-item-name">title</span><span class="vocab-item-aliases">heading, h</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">📝</span><span class="vocab-item-name">body</span><span class="vocab-item-aliases">content, text</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🦶</span><span class="vocab-item-name">footer</span><span class="vocab-item-aliases">actions</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔘</span><span class="vocab-item-name">button</span><span class="vocab-item-aliases">btn, cta</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">📥</span><span class="vocab-item-name">input</span><span class="vocab-item-aliases">field, control</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔗</span><span class="vocab-item-name">link</span><span class="vocab-item-aliases">anchor, a</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🏷️</span><span class="vocab-item-name">label</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🎭</span><span class="vocab-item-name">icon</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">📄</span><span class="vocab-item-name">item</span><span class="vocab-item-aliases">row, entry</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🖇️</span><span class="vocab-item-name">divider</span><span class="vocab-item-aliases">separator, hr</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔭</span><span class="vocab-item-name">prefix</span><span class="vocab-item-aliases">prepend</span></div>
+        </div>
+      </div>
+
+      <div class="vocab-category">
+        <div class="vocab-category-header">🎨 Modifiers — States</div>
+        <div class="vocab-items">
+          <div class="vocab-item"><span class="vocab-item-emoji">🌟</span><span class="vocab-item-name">primary</span><span class="vocab-item-aliases">featured, hero</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔴</span><span class="vocab-item-name">danger</span><span class="vocab-item-aliases">error, destructive</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🟢</span><span class="vocab-item-name">success</span><span class="vocab-item-aliases">ok, valid</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🟡</span><span class="vocab-item-name">warning</span><span class="vocab-item-aliases">caution</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔵</span><span class="vocab-item-name">info</span><span class="vocab-item-aliases">-</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">👻</span><span class="vocab-item-name">disabled</span><span class="vocab-item-aliases">ghost, muted</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">✅</span><span class="vocab-item-name">active</span><span class="vocab-item-aliases">selected, on</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">⏳</span><span class="vocab-item-name">loading</span><span class="vocab-item-aliases">pending, busy</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🔒</span><span class="vocab-item-name">locked</span><span class="vocab-item-aliases">readonly</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">💎</span><span class="vocab-item-name">premium</span><span class="vocab-item-aliases">pro, upgrade</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🆕</span><span class="vocab-item-name">new</span><span class="vocab-item-aliases">fresh, recent</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🕶️</span><span class="vocab-item-name">dark</span><span class="vocab-item-aliases">night</span></div>
+        </div>
+      </div>
+
+      <div class="vocab-category">
+        <div class="vocab-category-header">🎛️ Modifiers — Size</div>
+        <div class="vocab-items">
+          <div class="vocab-item"><span class="vocab-item-emoji">🔬</span><span class="vocab-item-name">xs</span><span class="vocab-item-aliases">extra-small</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🤏</span><span class="vocab-item-name">sm</span><span class="vocab-item-aliases">small</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">⚖️</span><span class="vocab-item-name">md</span><span class="vocab-item-aliases">medium, default</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🏋️</span><span class="vocab-item-name">lg</span><span class="vocab-item-aliases">large</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🏔️</span><span class="vocab-item-name">xl</span><span class="vocab-item-aliases">extra-large</span></div>
+          <div class="vocab-item"><span class="vocab-item-emoji">🌍</span><span class="vocab-item-name">2xl</span><span class="vocab-item-aliases">full, max</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN TOKENS -->
+<section id="tokens">
+  <div class="section-inner">
+    <p class="section-label">04 — Design Tokens</p>
+    <h2 class="section-title">Variables, all the way down</h2>
+    <p class="section-lead">BEMoji's token system uses emoji as CSS custom property names. This means the theme layer is as illegible as the class layer — one consistent obfuscated aesthetic throughout your entire codebase.</p>
+
+    <div class="util-grid">
+
+      <div>
+        <div class="util-group-title">Color Tokens</div>
+        <table class="util-table">
+          <tr><td>⬛</td><td>--⬛</td><td>Base dark / ink</td></tr>
+          <tr><td>⬜</td><td>--⬜</td><td>Base light / paper</td></tr>
+          <tr><td>🔴</td><td>--🔴</td><td>Danger / error</td></tr>
+          <tr><td>🟢</td><td>--🟢</td><td>Success / ok</td></tr>
+          <tr><td>🟡</td><td>--🟡</td><td>Warning</td></tr>
+          <tr><td>🔵</td><td>--🔵</td><td>Info / accent</td></tr>
+          <tr><td>🟣</td><td>--🟣</td><td>Purple / brand</td></tr>
+          <tr><td>🟠</td><td>--🟠</td><td>Orange</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div class="util-group-title">Spacing Scale</div>
+        <table class="util-table">
+          <tr><td>📏</td><td>--📏-1</td><td>0.25rem (4px)</td></tr>
+          <tr><td>📏</td><td>--📏-2</td><td>0.5rem (8px)</td></tr>
+          <tr><td>📏</td><td>--📏-4</td><td>1rem (16px)</td></tr>
+          <tr><td>📏</td><td>--📏-6</td><td>1.5rem (24px)</td></tr>
+          <tr><td>📏</td><td>--📏-8</td><td>2rem (32px)</td></tr>
+          <tr><td>📏</td><td>--📏-12</td><td>3rem (48px)</td></tr>
+          <tr><td>📏</td><td>--📏-16</td><td>4rem (64px)</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div class="util-group-title">Typography</div>
+        <table class="util-table">
+          <tr><td>✍️</td><td>--✍️-xs</td><td>0.75rem</td></tr>
+          <tr><td>✍️</td><td>--✍️-sm</td><td>0.875rem</td></tr>
+          <tr><td>✍️</td><td>--✍️-base</td><td>1rem</td></tr>
+          <tr><td>✍️</td><td>--✍️-lg</td><td>1.125rem</td></tr>
+          <tr><td>✍️</td><td>--✍️-xl</td><td>1.25rem</td></tr>
+          <tr><td>✍️</td><td>--✍️-2xl</td><td>1.5rem</td></tr>
+          <tr><td>✍️</td><td>--✍️-4xl</td><td>2.25rem</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div class="util-group-title">Shadows & Radius</div>
+        <table class="util-table">
+          <tr><td>🌑</td><td>--🌑-sm</td><td>Subtle shadow</td></tr>
+          <tr><td>🌑</td><td>--🌑-md</td><td>Medium shadow</td></tr>
+          <tr><td>🌑</td><td>--🌑-lg</td><td>Large shadow</td></tr>
+          <tr><td>🌑</td><td>--🌑-inner</td><td>Inset shadow</td></tr>
+          <tr><td>⭕</td><td>--⭕-sm</td><td>border-radius: 4px</td></tr>
+          <tr><td>⭕</td><td>--⭕-md</td><td>border-radius: 8px</td></tr>
+          <tr><td>⭕</td><td>--⭕-full</td><td>border-radius: 9999px</td></tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESPONSIVE -->
+<section class="breakpoints-section" id="responsive">
+  <div class="section-inner">
+    <p class="section-label" style="color:rgba(255,77,0,0.8)">05 — Responsive System</p>
+    <h2 class="section-title">Breakpoints as emoji prefixes</h2>
+    <p class="section-lead">Responsive utilities use an emoji breakpoint prefix, separated from the utility by a zero-width joiner (U+200D). This keeps class names as a single unicode "word" from the browser's perspective, while remaining visually parseable.</p>
+
+    <div class="breakpoint-grid">
+      <div class="bp-card">
+        <div class="bp-emoji">📱</div>
+        <div class="bp-name">xs</div>
+        <div class="bp-range">0 – 639px</div>
+        <div style="color:rgba(255,255,255,0.4); font-size:0.8rem;">Mobile first (no prefix)</div>
+        <div class="bp-usage">📐💠</div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-emoji">📟</div>
+        <div class="bp-name">sm</div>
+        <div class="bp-range">640px+</div>
+        <div style="color:rgba(255,255,255,0.4); font-size:0.8rem;">Large mobile / phablet</div>
+        <div class="bp-usage">📟📐🔲</div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-emoji">📲</div>
+        <div class="bp-name">md</div>
+        <div class="bp-range">768px+</div>
+        <div style="color:rgba(255,255,255,0.4); font-size:0.8rem;">Tablet</div>
+        <div class="bp-usage">📲📐🔲</div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-emoji">💻</div>
+        <div class="bp-name">lg</div>
+        <div class="bp-range">1024px+</div>
+        <div style="color:rgba(255,255,255,0.4); font-size:0.8rem;">Laptop / desktop</div>
+        <div class="bp-usage">💻📐🔳</div>
+      </div>
+      <div class="bp-card" style="border-right:none">
+        <div class="bp-emoji">🖥️</div>
+        <div class="bp-name">xl</div>
+        <div class="bp-range">1280px+</div>
+        <div style="color:rgba(255,255,255,0.4); font-size:0.8rem;">Wide desktop</div>
+        <div class="bp-usage">🖥️📐⬛</div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <div class="install-code" style="position:relative;">
+        <pre style="color:#e8e4d8; font-size:0.82rem; line-height:1.8;"><span class="tok-cmt">/* Generated by the BEMoji compiler */</span>
+
+<span style="color:#b392f0">@media</span> (min-width: 640px) {
+  <span style="color:#b392f0">.\01F4DF \01F4D0 \01F532</span> { grid-template-columns: repeat(2, 1fr); }
+}
+
+<span style="color:#b392f0">@media</span> (min-width: 1024px) {
+  <span style="color:#b392f0">.\01F4BB \01F4D0 \01F533</span> { grid-template-columns: repeat(3, 1fr); }
+}
+
+<span class="tok-cmt">/* Or with modern emoji CSS (most environments) */</span>
+
+<span style="color:#b392f0">@media</span> (min-width: 640px) { .📟📐🔲 { grid-template-columns: repeat(2, 1fr); } }
+<span style="color:#b392f0">@media</span> (min-width: 1024px) { .💻📐🔳 { grid-template-columns: repeat(3, 1fr); } }</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENT SHOWCASE -->
+<section class="showcase-section" id="components">
+  <div class="section-inner">
+    <p class="section-label" style="color:rgba(255,77,0,0.8)">06 — Component Library</p>
+    <h2 class="section-title">Built-in components</h2>
+    <p class="section-lead">BEMoji ships with 24 production-ready components pre-built in the framework stylesheet. Each follows the emoji naming convention throughout, with full modifier support.</p>
+
+    <div class="showcase-grid">
+
+      <div class="showcase-item">
+        <div class="showcase-preview">
+          <div class="preview-card">
+            <div class="preview-card-img">🃏</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">Card Title</div>
+              <div class="preview-card-text">Supporting body text goes here</div>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-meta">🃏 card — .🃏  .🃏__🖼️  .🃏__🔠  .🃏__📝</div>
+      </div>
+
+      <div class="showcase-item">
+        <div class="showcase-preview">
+          <div class="preview-badges">
+            <span class="preview-badge">🌟 Primary</span>
+            <span class="preview-badge preview-badge-red">🔴 Danger</span>
+            <span class="preview-badge preview-badge-green">🟢 Success</span>
+            <span class="preview-badge preview-badge-yellow">🟡 Warning</span>
+          </div>
+        </div>
+        <div class="showcase-meta">🏷️ badge — .🏷️  .🏷️--🌟  .🏷️--🔴  .🏷️--🟢</div>
+      </div>
+
+      <div class="showcase-item">
+        <div class="showcase-preview">
+          <div class="preview-btns">
+            <button class="preview-btn preview-btn-primary">🌟 Primary</button>
+            <button class="preview-btn preview-btn-danger">🔴 Danger</button>
+            <button class="preview-btn preview-btn-ghost">👻 Ghost</button>
+          </div>
+        </div>
+        <div class="showcase-meta">🔘 button — .🔘  .🔘--🌟  .🔘--🔴  .🔘--👻</div>
+      </div>
+
+      <div class="showcase-item">
+        <div class="showcase-preview">
+          <div class="preview-alert">
+            <span>🔴</span>
+            <div>Something went wrong. Please try again or contact support.</div>
+          </div>
+        </div>
+        <div class="showcase-meta">🔔 alert — .🔔  .🔔--🔴  .🔔__💬  .🔔__🔘</div>
+      </div>
+
+      <div class="showcase-item">
+        <div class="showcase-preview">
+          <input class="preview-input" placeholder="📥 Type something..." />
+        </div>
+        <div class="showcase-meta">📥 input — .📥  .📥--👻  .📥--🟢  .📥--🔴</div>
+      </div>
+
+      <div class="showcase-item">
+        <div class="showcase-preview" style="flex-direction:column; gap:0.5rem; font-family:var(--mono); font-size:0.8rem;">
+          <div style="opacity:0.4; display:flex; align-items:center; gap:0.5rem;">🍞 <span>Home</span> <span>/</span> <span>Products</span></div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">🍞 <span>Home</span> <span style="opacity:0.4">/</span> <span style="opacity:0.4">Cats</span> <span style="opacity:0.4">/</span> <span style="color:#a78bfa">Tabby</span></div>
+        </div>
+        <div class="showcase-meta">🍞 breadcrumb — .🍞  .🍞__📄  .🍞__📄--✅</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TOOLING -->
+<section class="tooling-section" id="tooling">
+  <div class="section-inner">
+    <p class="section-label">07 — Tooling Ecosystem</p>
+    <h2 class="section-title">A complete dev toolchain</h2>
+    <p class="section-lead">BEMoji ships with a full suite of build tools, editor integrations, and framework adapters. You write readable names in development; the compiler handles the emoji transformation at build time.</p>
+
+    <div class="tools-grid">
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">⚙️</div>
+          <div>
+            <div class="tool-name">PostCSS Plugin</div>
+          </div>
+          <div class="tool-pkg">bemoji-postcss</div>
+        </div>
+        <div class="tool-body">
+          <p class="tool-desc">Transforms human-readable BEM class names in your CSS source to emoji equivalents at build time. Supports custom mappings, escaped output, and source maps.</p>
+          <div class="tool-code">
+<pre>// postcss.config.js
+module.exports = {
+  plugins: [
+    require('bemoji-postcss')({
+      config: './bemoji.config.js',
+      escape: 'auto',   // 'raw' | 'unicode'
+      sourceMap: true,
+    })
+  ]
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">⚡</div>
+          <div>
+            <div class="tool-name">Vite Plugin</div>
+          </div>
+          <div class="tool-pkg">vite-plugin-bemoji</div>
+        </div>
+        <div class="tool-body">
+          <p class="tool-desc">Zero-config Vite integration. Transforms class names in HTML, JSX, TSX, and Vue templates. Hot module reloading works transparently with emoji class names.</p>
+          <div class="tool-code">
+<pre>// vite.config.ts
+import bemoji from 'vite-plugin-bemoji';
+
+export default {
+  plugins: [
+    bemoji({
+      config: './bemoji.config.js',
+      include: ['**/*.{tsx,jsx,vue,html}'],
+    })
+  ]
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">🧩</div>
+          <div>
+            <div class="tool-name">VS Code Extension</div>
+          </div>
+          <div class="tool-pkg">bemoji-vscode</div>
+        </div>
+        <div class="tool-body">
+          <p class="tool-desc">IntelliSense for BEMoji class names. Hover over an emoji class to see its human-readable equivalent. Autocomplete from your config, lint unknown tokens, and toggle between emoji/readable views.</p>
+          <div class="tool-code">
+<pre>// .vscode/settings.json
+{
+  "bemoji.showTooltips": true,
+  "bemoji.autocomplete": "emoji+readable",
+  "bemoji.lintUnknownTokens": "warn",
+  "bemoji.hoverFormat": "both",
+  "bemoji.configPath": "./bemoji.config.js"
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">⚗️</div>
+          <div>
+            <div class="tool-name">ESLint Plugin</div>
+          </div>
+          <div class="tool-pkg">eslint-plugin-bemoji</div>
+        </div>
+        <div class="tool-body">
+          <p class="tool-desc">Enforces correct BEMoji patterns. Warns on unknown emoji tokens, invalid block–element–modifier hierarchies, missing block context on elements, and disallowed multi-emoji sequences.</p>
+          <div class="tool-code">
+<pre>// .eslintrc.js
+{
+  "plugins": ["bemoji"],
+  "rules": {
+    "bemoji/no-unknown-tokens": "error",
+    "bemoji/no-orphan-elements": "warn",
+    "bemoji/no-modifier-without-base": "error",
+    "bemoji/prefer-semantic-emoji": "warn"
+  }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">⚛️</div>
+          <div>
+            <div class="tool-name">React / JSX Helpers</div>
+          </div>
+          <div class="tool-pkg">bemoji/react</div>
+        </div>
+        <div class="tool-body">
+          <p class="tool-desc">The <code>bem()</code> helper resolves readable block/element/modifier strings to emoji class names at runtime (or at compile time with the Babel transform). Works with conditional modifiers via object syntax.</p>
+          <div class="tool-code">
+<pre>import { bem } from 'bemoji/react';
+
+// Runtime usage
+bem('card')              // → '🃏'
+bem('card__image')       // → '🃏__🖼️'
+bem('card', { primary }) // → '🃏 🃏--🌟'
+bem('card__image', {
+  featured: true,
+  loading: false         // → '🃏__🖼️ 🃏__🖼️--🌟'
+})</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">💻</div>
+          <div>
+            <div class="tool-name">CLI</div>
+          </div>
+          <div class="tool-pkg">bemoji-cli</div>
+        </div>
+        <div class="tool-body">
+          <p class="tool-desc">Scaffold new projects, compile CSS, audit for unused tokens, generate a Storybook story per component, and export the full emoji→readable mapping as a JSON reference sheet.</p>
+          <div class="tool-code">
+<pre>npx bemoji init           # Scaffold + config
+npx bemoji compile        # Transform CSS files
+npx bemoji audit          # Check for unused tokens
+npx bemoji export --fmt json > tokens.json
+npx bemoji storybook      # Generate component stories
+npx bemoji decode "🃏__🖼️--🌟"
+# → card__image--featured</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-inner">
+    <p class="section-label">08 — Design Philosophy</p>
+    <h2 class="section-title">Why on earth would<br>you do this?</h2>
+    <p class="section-lead">BEMoji is a genuinely considered tradeoff, not a joke with no payoff. Here's the honest case for and against.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Free obfuscation</div>
+        <p class="pillar-body">Production CSS with emoji class names is meaningless to scrapers, competitors, and client-side inspectors. You get the obfuscation benefits of CSS modules or hashed class names with none of the build complexity — it's just the class names themselves.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Enforced vocabulary</div>
+        <p class="pillar-body">Because every UI concept maps to a single, canonical emoji, naming arguments become arguments about which emoji is most semantically correct — which is a much shorter argument than any discussion of BEM naming conventions.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Config is the contract</div>
+        <p class="pillar-body">The <code>bemoji.config.js</code> file is a living contract between your design system and your codebase. Changing a concept's emoji is a single-line config change that propagates everywhere, unlike refactoring a string-based class name across thousands of files.</p>
+      </div>
+      <div class="pillar" style="border-right:none">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">Developer velocity</div>
+        <p class="pillar-body">Emoji are faster to type than long BEM class strings once you have input method shortcuts. <code>🃏</code> takes two keystrokes on most OS emoji pickers. <code>.card__image--featured</code> takes 24. The math eventually works out.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 3rem;">
+      <strong>Honest caveat:</strong> BEMoji is not appropriate for every team or project. If your team doesn't control the config file, emoji class names become a liability rather than an asset. It also requires editor tooling buy-in from every contributor. The VS Code extension and ESLint plugin exist specifically to make this tractable.
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison-section" id="comparison">
+  <div class="section-inner">
+    <p class="section-label">09 — Framework Comparison</p>
+    <h2 class="section-title">How BEMoji stacks up</h2>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>BEMoji</th>
+          <th>Tailwind CSS</th>
+          <th>BEM (vanilla)</th>
+          <th>CSS Modules</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Zero runtime JS</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Automatic obfuscation</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="partial">Build-time only</span></td>
+        </tr>
+        <tr>
+          <td>Semantic naming</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Responsive utilities</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td>Design token system</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td>Human-readable source</td>
+          <td><span class="partial">Via build tool</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Pre-built components</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td>Bundle size</td>
+          <td><span class="check">~4kb gzip</span></td>
+          <td><span class="check">~10kb purged</span></td>
+          <td><span class="check">0kb (DIY)</span></td>
+          <td><span class="check">0kb (DIY)</span></td>
+        </tr>
+        <tr>
+          <td>Colleague confusion</td>
+          <td><span class="check">Maximum</span></td>
+          <td><span class="partial">Moderate</span></td>
+          <td><span class="partial">Minimal</span></td>
+          <td><span class="partial">Minimal</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install-section" id="install">
+  <div class="section-inner">
+    <p class="section-label" style="color:rgba(255,77,0,0.8)">10 — Get Started</p>
+    <h2 class="section-title">Install BEMoji</h2>
+
+    <div class="install-steps">
+      <div class="install-step">
+        <div class="step-num">Step 01</div>
+        <div class="step-title">Install the package</div>
+        <div class="install-code" style="position:relative;">
+          <pre>npm install bemoji
+# or
+yarn add bemoji
+# or
+pnpm add bemoji</pre>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <p class="step-desc">Installs the core framework, PostCSS plugin, and CLI. Peer deps are PostCSS 8+ and Node 18+.</p>
+      </div>
+
+      <div class="install-step">
+        <div class="step-num">Step 02</div>
+        <div class="step-title">Initialise your config</div>
+        <div class="install-code" style="position:relative;">
+          <pre>npx bemoji init
+
+# Creates:
+# ├── bemoji.config.js
+# ├── bemoji.css (base styles)
+# └── postcss.config.js</pre>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <p class="step-desc">The init wizard lets you pick a pre-built vocabulary or define your own token set from scratch.</p>
+      </div>
+
+      <div class="install-step">
+        <div class="step-num">Step 03</div>
+        <div class="step-title">Import and build</div>
+        <div class="install-code" style="position:relative;">
+          <pre>/* main.css */
+@import 'bemoji/base';
+@import 'bemoji/tokens';
+@import 'bemoji/components';
+
+/* Then write your own BEM: */
+.[card] { border-radius: var(--⭕-md); }
+.[card__image--featured] {
+  outline: 2px solid var(--🟡);
+}</pre>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <p class="step-desc">The PostCSS plugin compiles <code>[card]</code> shorthand to emoji class names automatically at build time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🎯 BEMoji</div>
+  <div class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="#">npm</a>
+    <a href="#">Documentation</a>
+    <a href="#">Changelog</a>
+    <a href="#">Discord</a>
+    <a href="#">RFC</a>
+  </div>
+  <div class="footer-copy">
+    BEMoji v1.0.0-beta · Released under MIT License · Built with actual CSS · "It works. We're as surprised as you are." · Not affiliated with the Unicode Consortium, but we've sent them a card.
+  </div>
+</footer>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.demo-pane').forEach(p => p.classList.remove('active'));
+    document.querySelector(`[onclick="switchTab('${name}')"]`).classList.add('active');
+    document.getElementById(`tab-${name}`).classList.add('active');
+  }
+
+  function copyCode(btn) {
+    const code = btn.closest('.install-code').querySelector('pre').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'copied!';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  }
+
+  // Intersection observer for subtle section animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.concept-card, .tool-card, .pillar, .vocab-category, .bp-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

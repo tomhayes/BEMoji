@@ -1,0 +1,14 @@
+{
+  "name": "eslint-plugin-bemoji",
+  "version": "1.0.0-beta.1",
+  "description": "ESLint plugin for BEMoji — enforces correct emoji token usage and BEM hierarchy.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "keywords": ["eslint", "eslint-plugin", "bemoji", "bem", "emoji", "css"],
+  "license": "MIT",
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  }
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEMoji Vanilla Example</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body style="padding: 2rem; font-family: system-ui; background: #f5f5f5;">
+
+  <h1 style="margin-bottom: 2rem;">BEMoji — Vanilla HTML Example</h1>
+
+  <!-- ── BUTTONS ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      🔘 Buttons
+    </h2>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <button class="🔘">Default</button>
+      <button class="🔘 🔘--🌟">Primary</button>
+      <button class="🔘 🔘--🔴">Danger</button>
+      <button class="🔘 🔘--🟢">Success</button>
+      <button class="🔘 🔘--🟡">Warning</button>
+      <button class="🔘 🔘--👁️">Ghost</button>
+      <button class="🔘 🔘--👻" disabled>Disabled</button>
+      <button class="🔘 🔘--🌟 🔘--⏳">Loading</button>
+    </div>
+
+    <div style="display: flex; gap: 0.75rem; margin-top: 0.75rem; align-items: center;">
+      <button class="🔘 🔘--🌟 🔘--🔬">XS</button>
+      <button class="🔘 🔘--🌟 🔘--🤏">SM</button>
+      <button class="🔘 🔘--🌟">MD (default)</button>
+      <button class="🔘 🔘--🌟 🔘--🏋️">LG</button>
+      <button class="🔘 🔘--🌟 🔘--🏔️">XL</button>
+    </div>
+  </section>
+
+  <!-- ── BADGES ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      🏷️ Badges
+    </h2>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+      <span class="🏷️">Default</span>
+      <span class="🏷️ 🏷️--🌟">Primary</span>
+      <span class="🏷️ 🏷️--🔴">Danger</span>
+      <span class="🏷️ 🏷️--🟢">Success</span>
+      <span class="🏷️ 🏷️--🟡">Warning</span>
+      <span class="🏷️ 🏷️--🔵">Info</span>
+      <span class="🏷️ 🏷️--🔥">Hot 🔥</span>
+      <span class="🏷️ 🏷️--💎">Premium</span>
+      <span class="🏷️ 🏷️--🆕">New</span>
+    </div>
+  </section>
+
+  <!-- ── ALERTS ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      🔔 Alerts
+    </h2>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 480px;">
+
+      <div class="🔔 🔔--🌟">
+        <span class="🔔__🎭">ℹ️</span>
+        <div class="🔔__📝">
+          <div class="🔔__🔠">Information</div>
+          Your changes have been saved to the cloud.
+        </div>
+      </div>
+
+      <div class="🔔 🔔--🟢">
+        <span class="🔔__🎭">✅</span>
+        <div class="🔔__📝">
+          <div class="🔔__🔠">Success!</div>
+          Account created successfully. Welcome aboard.
+        </div>
+      </div>
+
+      <div class="🔔 🔔--🟡">
+        <span class="🔔__🎭">⚠️</span>
+        <div class="🔔__📝">
+          <div class="🔔__🔠">Warning</div>
+          Your session will expire in 5 minutes.
+        </div>
+      </div>
+
+      <div class="🔔 🔔--🔴">
+        <span class="🔔__🎭">🚨</span>
+        <div class="🔔__📝">
+          <div class="🔔__🔠">Error</div>
+          Something went wrong. Please try again.
+        </div>
+        <button class="🔔__✖️">✕</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CARDS ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      🃏 Cards
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; max-width: 800px;">
+
+      <article class="🃏">
+        <div class="🃏__🖼️" style="aspect-ratio: 16/9; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+          🃏
+        </div>
+        <div class="🃏__📝">
+          <h3 class="🃏__🔠">Standard Card</h3>
+          <p class="🃏__📖">A basic card component with image, title, and body text.</p>
+        </div>
+        <footer class="🃏__🦶">
+          <button class="🔘 🔘--🌟 🔘--🤏">Read more</button>
+          <span class="🏷️ 🏷️--🆕" style="margin-left: auto;">New</span>
+        </footer>
+      </article>
+
+      <article class="🃏 🃏--☁️">
+        <div class="🃏__🖼️ 🃏__🖼️--🌟" style="aspect-ratio: 16/9; background: linear-gradient(135deg, #f093fb, #f5576c); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+          🌟
+        </div>
+        <div class="🃏__📝">
+          <h3 class="🃏__🔠">Featured Card</h3>
+          <p class="🃏__📖">Elevated shadow and featured image modifier applied.</p>
+        </div>
+        <footer class="🃏__🦶">
+          <button class="🔘 🔘--🔴 🔘--🤏">Delete</button>
+          <button class="🔘 🔘--🌟 🔘--🤏">Edit</button>
+        </footer>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── FORM ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      📋 Form
+    </h2>
+    <form class="📋" style="max-width: 400px; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08);">
+
+      <div class="📋__📄">
+        <label class="📋__🏷️">Email address</label>
+        <input class="📥" type="email" placeholder="you@example.com">
+        <span class="📋__💡">We'll never share your email.</span>
+      </div>
+
+      <div class="📋__📄">
+        <label class="📋__🏷️">Password <span class="📋__❗">*</span></label>
+        <input class="📥 📥--🔴" type="password" value="bad-password">
+        <span class="📋__🚨">🚨 Password must be at least 8 characters.</span>
+      </div>
+
+      <div class="📋__📄">
+        <label class="📋__🏷️">Username</label>
+        <input class="📥 📥--🟢" type="text" value="bemoji_fan">
+      </div>
+
+      <div class="📋__📄">
+        <label class="📋__🏷️">Locked field</label>
+        <input class="📥 📥--👻" type="text" value="read-only value" disabled>
+      </div>
+
+      <button class="🔘 🔘--🌟 🔘--🌊" type="submit">Create account</button>
+    </form>
+  </section>
+
+  <!-- ── BREADCRUMB ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      🍞 Breadcrumb
+    </h2>
+    <nav class="🍞">
+      <div class="🍞__📄"><a class="🍞__🔗" href="#">Home</a></div>
+      <div class="🍞__📄"><a class="🍞__🔗" href="#">Components</a></div>
+      <div class="🍞__📄"><a class="🍞__🔗" href="#">Cards</a></div>
+      <div class="🍞__📄 🍞__📄--✅">Featured Card</div>
+    </nav>
+  </section>
+
+  <!-- ── PROGRESS ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      📶 Progress
+    </h2>
+    <div style="display: flex; flex-direction: column; gap: 1.25rem; max-width: 400px;">
+      <div class="📶">
+        <div class="📶__🔠"><span>Storage</span><span>64%</span></div>
+        <div class="📶__🖼️"><div class="📶__📝" style="width: 64%"></div></div>
+      </div>
+      <div class="📶 📶--🟢">
+        <div class="📶__🔠"><span>Upload complete</span><span>100%</span></div>
+        <div class="📶__🖼️"><div class="📶__📝" style="width: 100%"></div></div>
+      </div>
+      <div class="📶 📶--🔴">
+        <div class="📶__🔠"><span>Critical</span><span>92%</span></div>
+        <div class="📶__🖼️"><div class="📶__📝" style="width: 92%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AVATARS ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      👤 Avatars
+    </h2>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <div class="👤 👤--🔬">XS</div>
+      <div class="👤 👤--🤏">SM</div>
+      <div class="👤">MD</div>
+      <div class="👤 👤--🏋️">LG</div>
+      <div class="👤 👤--🏔️">XL</div>
+      <div class="👤" style="position: relative;">
+        T
+        <span class="👤__🔢"></span>
+      </div>
+      <div class="👤" style="position: relative; background: var(--🟣-light); color: var(--🟣);">
+        P
+        <span class="👤__🔢 👤__🔢--🔴"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKELETONS ── -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">
+      💀 Skeleton Loaders
+    </h2>
+    <div style="max-width: 320px; background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08);">
+      <div class="💀 💀--🖼️" style="margin-bottom: 1rem; height: 120px;"></div>
+      <div class="💀 💀--🔠" style="margin-bottom: 0.75rem;"></div>
+      <div class="💀 💀--📝" style="margin-bottom: 0.5rem;"></div>
+      <div class="💀 💀--📝" style="width: 80%; margin-bottom: 0.5rem;"></div>
+      <div class="💀 💀--📝" style="width: 60%;"></div>
+    </div>
+  </section>
+
+</body>
+</html>

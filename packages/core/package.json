@@ -1,0 +1,25 @@
+{
+  "name": "bemoji",
+  "version": "1.0.0-beta.1",
+  "description": "BEMoji — BEM methodology with emoji class names. Core framework.",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./react": "./src/react.js",
+    "./base": "./css/base.css",
+    "./tokens": "./css/tokens.css",
+    "./components": "./css/components.css",
+    "./utilities": "./css/utilities.css"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": ["css", "bem", "emoji", "framework", "design-system"],
+  "license": "MIT",
+  "files": [
+    "src/",
+    "css/"
+  ]
+}

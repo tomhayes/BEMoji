@@ -1,0 +1,18 @@
+{
+  "name": "bemoji-postcss",
+  "version": "1.0.0-beta.1",
+  "description": "PostCSS plugin for BEMoji — transforms readable BEM names to emoji class names at build time.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "keywords": ["postcss-plugin", "bemoji", "css", "emoji", "bem"],
+  "license": "MIT",
+  "peerDependencies": {
+    "postcss": ">=8.0.0"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.38",
+    "vitest": "^1.4.0"
+  }
+}

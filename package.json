@@ -1,0 +1,34 @@
+{
+  "name": "bemoji-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BEMoji — the emoji-first CSS framework. Monorepo root.",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint packages --ext .js,.ts,.jsx,.tsx",
+    "docs:dev": "npx serve docs -p 3000",
+    "docs:build": "echo 'Docs are static HTML — no build step required'",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "vitest": "^1.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/bemoji.git"
+  },
+  "keywords": ["css", "framework", "bem", "emoji", "postcss"],
+  "license": "MIT"
+}
